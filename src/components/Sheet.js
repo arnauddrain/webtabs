@@ -3,7 +3,7 @@ import Line from './Line'
 
 class Sheet extends React.Component {
   render() {
-    return <svg width="100" height="100">
+    return <svg width="1080" height="300">
       <Line></Line>
     </svg>
   }
