@@ -1,9 +1,13 @@
 import React from 'react';
-import LeftLine from './LeftLine';
+import LineStart from './LineStart';
 
 class Line extends React.Component {
   render() {
-    return <LeftLine />
+    return (
+      <g transform={'translate(0, ' + (20 + 300 * this.props.number) + ')'}>
+        <LineStart />
+      </g>
+    )
   }
 }
 
