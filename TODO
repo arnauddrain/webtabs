@@ -7,6 +7,7 @@
 - TypeScript ?
 - Tests
 - CI/CD
+- Todo in github
 
 -- Soft
 - Export parsers to npm
@@ -16,6 +17,7 @@
 - Display music sheet
 - Load any file
 - Multi-instrument
+- Responsive
 
 --Science fiction
 - Play music sheet
