@@ -1,0 +1,24 @@
+-- Better use of react
+- Hooks
+- Context
+
+-- Tooling
+- Webpack
+- TypeScript ?
+- Tests
+- CI/CD
+
+-- Soft
+- Export parsers to npm
+
+-- Feature
+- Read MusicXML
+- Display music sheet
+- Load any file
+- Multi-instrument
+
+--Science fiction
+- Play music sheet
+- Export MusicXML
+- Edit music sheet
+- More formats
