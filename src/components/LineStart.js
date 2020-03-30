@@ -6,7 +6,7 @@ class LeftLine extends React.Component {
   }
 }
 
-function LeftNotes() {
+function LeftSheet() {
   const lines = [...Array(5).keys()].map(key => <LeftLine key={key} number={key} base={15} step={9} />);
   return (
     <>
@@ -38,7 +38,7 @@ class LineStart extends React.Component {
         <path d=" M5,230 C6,230,6,230,18,233 C12,227,6,227,6,227 z"
           fill="black" stroke="none"></path>
         <rect x="12" y="15" width="1" height="205" fill="black"></rect>
-        <LeftNotes />
+        <LeftSheet />
         <LeftTab />
       </>
     )

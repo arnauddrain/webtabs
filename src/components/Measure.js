@@ -6,31 +6,31 @@ class Line extends React.Component {
   }
 }
 
-class BlockNotes extends React.Component {
+class MeasureSheet extends React.Component {
   render() {
     const lines = [...Array(5).keys()].map(key => <Line key={key} number={key} base={15} step={9} />);
     return lines
   }
 }
 
-class BlockTab extends React.Component {
+class MeasureTab extends React.Component {
   render() {
     const lines = [...Array(6).keys()].map(key => <Line key={key} number={key} base={165} step={11} />);
     return lines
   }
 }
 
-class LineBlock extends React.Component {
+class Measure extends React.Component {
   render() {
     return (
       <g transform={'translate(' + (62 + 300 * this.props.number) + ', 0)'}>
         <rect x="300" y="15" width="1" height="37" fill="black"></rect>
         <rect x="300" y="165" width="1" height="56" fill="black"></rect>
-        <BlockNotes />
-        <BlockTab />
+        <MeasureSheet />
+        <MeasureTab />
       </g>
     )
   }
 }
 
-export default LineBlock;
+export default Measure;
