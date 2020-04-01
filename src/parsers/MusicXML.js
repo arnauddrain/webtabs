@@ -1,5 +1,9 @@
 function getTextValue(domElement, tagName) {
-  return domElement.getElementsByTagName(tagName)[0].childNodes[0].nodeValue;
+  const elements = domElement.getElementsByTagName(tagName);
+  if (!elements.length) {
+    return null;
+  }
+  return elements[0].childNodes[0].nodeValue;
 }
 
 function parseNote(noteXML) {
