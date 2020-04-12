@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Sheet from './components/Sheet';
-import * as MusicXML from './parsers/MusicXML';
+import MusicXML from './parsers/MusicXML';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,9 +12,10 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    document.title = "Webtabs"
+    document.title = "Webtabs";
+    const musicXML = new MusicXML();
     this.setState({
-      music: await MusicXML.parse('sample.xml')
+      music: await musicXML.parse('sample.xml')
     });
   }
 

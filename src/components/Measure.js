@@ -1,4 +1,5 @@
 import React from 'react';
+import Note from './Note';
 
 const LINE_LENGTH = 300;
 
@@ -13,17 +14,12 @@ class MeasureSheet extends React.Component {
     const notes = [];
     let currentDuration = 0;
     this.props.measure.notes.forEach((note, index) => {
-      const noteDuration = note.duration * (1 / this.props.measure.time.beatType);
-      let icon;
-      if (noteDuration >= 1) {
-        icon = 'Round';
-      } else if (noteDuration >= 0.5) {
-        icon = 'White';
-      } else {
-        icon = 'Black';
-      }
-      notes.push(<image key={index} href={'/svg/' + icon + 'Note.svg'} x={10 + currentDuration} y="20"></image>);
-      currentDuration += LINE_LENGTH * note.duration / this.props.measure.time.beats;
+      const noteDuration = note.duration / this.props.measure.divisions / 4;
+      notes.push(
+        <g transform={'translate(' + (10 + currentDuration) + ', 0)'} key={index}>
+          <Note duration={noteDuration} note={note} />
+        </g>);
+      currentDuration += (LINE_LENGTH - 20) * (noteDuration / (this.props.measure.time.beats / this.props.measure.time.beatType));
     });
     const lines = [...Array(5).keys()].map(key => <Line key={key} number={key} base={15} step={9} />);
     return (
