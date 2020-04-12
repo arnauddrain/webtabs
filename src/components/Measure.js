@@ -17,7 +17,7 @@ class MeasureSheet extends React.Component {
       const noteDuration = note.duration / this.props.measure.divisions / 4;
       notes.push(
         <g transform={'translate(' + (10 + currentDuration) + ', 0)'} key={index}>
-          <Note duration={noteDuration} note={note} />
+          <Note duration={noteDuration} note={note} measure={this.props.measure} />
         </g>);
       currentDuration += (LINE_LENGTH - 20) * (noteDuration / (this.props.measure.time.beats / this.props.measure.time.beatType));
     });
