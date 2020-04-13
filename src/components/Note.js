@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Values from './values';
+
 function getValue(letter) {
   return {
     'A': 6,
@@ -17,22 +19,34 @@ class Note extends React.Component {
     const duration = this.props.duration;
     const note = this.props.note;
     const measure = this.props.measure;
-    const value = getValue(note.pitch.step) + 7 * note.pitch.octave;
+    let value;
     const keyValue = 4 * 7 + getValue(measure.clef.sign);
-    const diffValue = keyValue - value;
-    console.log(diffValue);
-    const zeroValue = 12 + 9 * 3 + 4.5 * diffValue;
-    console.log(zeroValue);
-    let icon;
-    if (duration >= 1) {
-      icon = 'Round';
-    } else if (duration >= 0.5) {
-      icon = 'White';
+    if (note.rest) {
+      value = keyValue + 5;
     } else {
-      icon = 'Black';
+      value = getValue(note.pitch.step) + 7 * note.pitch.octave;
+    }
+    const diffValue = keyValue - value;
+    const zeroValue = 12 + Values.SHEET_STEP * 3 + 4.5 * diffValue;
+    console.log(zeroValue, note);
+    let icon;
+    if (note.rest) {
+      if (duration >= 1) {
+        icon = 'QuarterRest';
+      } else if (duration >= 0.5) {
+        icon = 'QuarterRest';
+      } else {
+        icon = 'QuarterRest';
+      }
+    } else if (duration >= 1) {
+      icon = 'RoundNote';
+    } else if (duration >= 0.5) {
+      icon = 'WhiteNote';
+    } else {
+      icon = 'BlackNote';
     }
     return (
-      <image href={'/svg/' + icon + 'Note.svg'} y={zeroValue}></image>
+      <image href={'/svg/' + icon + '.svg'} y={zeroValue}></image>
     )
   }
 }

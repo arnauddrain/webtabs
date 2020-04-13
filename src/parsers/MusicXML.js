@@ -13,12 +13,17 @@ class MusicXML {
     return value;
   }
 
+  getBooleanValue(domElement, tagName) {
+    return (domElement.getElementsByTagName(tagName).length > 0);
+  }
+
   getNumberValue(domElement, tagName) {
     return parseInt(this.getTextValue(domElement, tagName));
   }
 
   parseNote(noteXML) {
     return {
+      rest: this.getBooleanValue(noteXML, 'rest'),
       pitch: {
         step: this.getTextValue(noteXML, 'step'),
         octave: this.getNumberValue(noteXML, 'octave')
