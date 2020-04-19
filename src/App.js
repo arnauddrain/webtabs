@@ -15,7 +15,7 @@ class App extends React.Component {
     document.title = "Webtabs";
     const musicXML = new MusicXML();
     this.setState({
-      music: await musicXML.parse('sample.xml')
+      music: await musicXML.parse('target.xml')
     });
   }
 
