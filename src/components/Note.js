@@ -15,20 +15,7 @@ function getValue(letter) {
 }
 
 class Note extends React.Component {
-  render() {
-    const duration = this.props.duration;
-    const note = this.props.note;
-    const measure = this.props.measure;
-    let value;
-    const keyValue = 4 * 7 + getValue(measure.clef.sign);
-    if (note.rest) {
-      value = keyValue + 5;
-    } else {
-      value = getValue(note.pitch.step) + 7 * note.pitch.octave;
-    }
-    const diffValue = keyValue - value;
-    const zeroValue = 12 + Values.SHEET_STEP * 3 + 4.5 * diffValue;
-    console.log(zeroValue, note);
+  selectImage(note, duration) {
     let icon;
     if (note.rest) {
       if (duration >= 1) {
@@ -45,6 +32,23 @@ class Note extends React.Component {
     } else {
       icon = 'BlackNote';
     }
+    return icon;
+  }
+
+  render() {
+    const duration = this.props.duration;
+    const note = this.props.note;
+    const measure = this.props.measure;
+    let value;
+    const keyValue = 4 * 7 + getValue(measure.clef.sign) + 7 * measure.clef.octaveChange;
+    if (note.rest) {
+      value = keyValue + 5;
+    } else {
+      value = getValue(note.pitch.step) + 7 * note.pitch.octave;
+    }
+    const diffValue = keyValue - value;
+    const zeroValue = 12 + Values.SHEET_STEP * 3 + 4.5 * diffValue;
+    let icon = this.selectImage(note, duration);
     return (
       <image href={'/svg/' + icon + '.svg'} y={zeroValue}></image>
     )
