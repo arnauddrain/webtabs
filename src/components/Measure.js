@@ -1,5 +1,6 @@
 import React from 'react';
 import Note from './Note';
+import TabNote from './TabNote';
 
 import Values from './values';
 
@@ -11,6 +12,18 @@ class Line extends React.Component {
 
 class MeasureSheet extends React.Component {
   render() {
+    return [...Array(5).keys()].map(key => <Line key={key} number={key} base={Values.SHEET_BASE} step={Values.SHEET_STEP} />);
+  }
+}
+
+class MeasureTab extends React.Component {
+  render() {
+    return [...Array(6).keys()].map(key => <Line key={key} number={key} base={Values.TAB_BASE} step={Values.TAB_STEP} />);
+  }
+}
+
+class MeasureNotes extends React.Component {
+  render() {
     const notes = [];
     let currentDuration = 0;
     this.props.measure.notes.forEach((note, index) => {
@@ -18,23 +31,11 @@ class MeasureSheet extends React.Component {
       notes.push(
         <g transform={'translate(' + (10 + currentDuration) + ', 0)'} key={index}>
           <Note duration={noteDuration} note={note} measure={this.props.measure} />
+          <TabNote note={note} measure={this.props.measure} />
         </g>);
       currentDuration += (Values.LINE_LENGTH - 20) * (noteDuration / (this.props.measure.time.beats / this.props.measure.time.beatType));
     });
-    const lines = [...Array(5).keys()].map(key => <Line key={key} number={key} base={Values.SHEET_BASE} step={Values.SHEET_STEP} />);
-    return (
-      <>
-        {notes}
-        {lines}
-      </>
-    )
-  }
-}
-
-class MeasureTab extends React.Component {
-  render() {
-    const lines = [...Array(6).keys()].map(key => <Line key={key} number={key} base={Values.TAB_BASE} step={Values.TAB_STEP} />);
-    return lines
+    return notes
   }
 }
 
@@ -46,6 +47,7 @@ class Measure extends React.Component {
         <rect x="300" y="165" width="1" height="56" fill="black"></rect>
         <MeasureSheet measure={this.props.measure} />
         <MeasureTab measure={this.props.measure} />
+        <MeasureNotes measure={this.props.measure} />
       </g>
     )
   }

@@ -28,6 +28,10 @@ class MusicXML {
         step: this.getTextValue(noteXML, 'step'),
         octave: this.getNumberValue(noteXML, 'octave')
       },
+      tab: {
+        fret: this.getNumberValue(noteXML, 'fret'),
+        string: this.getNumberValue(noteXML, 'string')
+      },
       duration: this.getNumberValue(noteXML, 'duration'),
       type: this.getTextValue(noteXML, 'type')
     };
@@ -43,7 +47,8 @@ class MusicXML {
       },
       clef: {
         sign: this.getTextValue(measureXML, 'sign'),
-        line: this.getNumberValue(measureXML, 'line')
+        line: this.getNumberValue(measureXML, 'line'),
+        octaveChange: this.getNumberValue(measureXML, 'clef-octave-change')
       },
       notes: [...measureXML.getElementsByTagName('note')].map(n => this.parseNote(n))
     };

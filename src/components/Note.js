@@ -49,9 +49,7 @@ class Note extends React.Component {
     const diffValue = keyValue - value;
     const zeroValue = 12 + Values.SHEET_STEP * 3 + 4.5 * diffValue;
     let icon = this.selectImage(note, duration);
-    return (
-      <image href={'/svg/' + icon + '.svg'} y={zeroValue}></image>
-    )
+    return <image href={'/svg/' + icon + '.svg'} y={zeroValue}></image>
   }
 }
 
