@@ -33,7 +33,8 @@ class MusicXML {
         string: this.getNumberValue(noteXML, 'string')
       },
       duration: this.getNumberValue(noteXML, 'duration'),
-      type: this.getTextValue(noteXML, 'type')
+      type: this.getTextValue(noteXML, 'type'),
+      isChord: this.getBooleanValue(noteXML, 'chord')
     };
   }
 
