@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Sheet from './components/Sheet';
+import Player from './components/Player';
 import MusicXML from './parsers/MusicXML';
 
 class App extends React.Component {
@@ -29,7 +30,10 @@ class App extends React.Component {
     }
     return (
       <div className="App">
-        <Sheet music={this.state.music} />
+        <div className="AppInner">
+          <Sheet music={this.state.music} />
+        </div>
+        <Player music={this.state.music} />
       </div>
     );
   }

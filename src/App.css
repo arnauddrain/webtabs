@@ -1,3 +1,27 @@
 .App {
   text-align: center;
 }
+
+.AppInner {
+  width: 1080px;
+  margin: auto;
+  position: relative;
+}
+
+.Player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: #cecece;
+}
+
+.PlayerInner {
+  width: 1080px;
+  margin: auto;
+}
+
+.PlayerAction {
+  cursor: pointer;
+}
