@@ -23,18 +23,28 @@ class MeasureTab extends React.Component {
 }
 
 class MeasureNotes extends React.Component {
+  generateNotes(note, noteDuration, index, currentDuration) {
+    return <g transform={'translate(' + (10 + currentDuration) + ', 0)'} key={index}>
+      <Note duration={noteDuration} note={note} measure={this.props.measure} />
+      <TabNote note={note} measure={this.props.measure} />
+    </g>
+  }
+
   render() {
     const notes = [];
     let currentDuration = 0;
-    this.props.measure.notes.forEach((note, index) => {
+    let index = 0;
+    while (index < this.props.measure.notes.length) {
+      const note = this.props.measure.notes[index];
       const noteDuration = note.duration / this.props.measure.divisions / 4;
-      notes.push(
-        <g transform={'translate(' + (10 + currentDuration) + ', 0)'} key={index}>
-          <Note duration={noteDuration} note={note} measure={this.props.measure} />
-          <TabNote note={note} measure={this.props.measure} />
-        </g>);
+      notes.push(this.generateNotes(note, noteDuration, index, currentDuration));
+      index++;
+      while (index < this.props.measure.notes.length && this.props.measure.notes[index].isChord) {
+        notes.push(this.generateNotes(this.props.measure.notes[index], noteDuration, index, currentDuration));
+        index++;
+      }
       currentDuration += (Values.LINE_LENGTH - 20) * (noteDuration / (this.props.measure.time.beats / this.props.measure.time.beatType));
-    });
+    }
     return notes
   }
 }
