@@ -1,7 +1,6 @@
 import React from 'react';
 import Note from './Note';
 import TabNote from './TabNote';
-
 import Values from './values';
 
 class Line extends React.Component {
@@ -51,13 +50,14 @@ class MeasureNotes extends React.Component {
 
 class Measure extends React.Component {
   render() {
+    const measure = this.props.measure;
     return (
       <g transform={'translate(' + (62 + Values.LINE_LENGTH * this.props.number) + ', 0)'}>
         <rect x="300" y="15" width="1" height="37" fill="black"></rect>
         <rect x="300" y="165" width="1" height="56" fill="black"></rect>
-        <MeasureSheet measure={this.props.measure} />
-        <MeasureTab measure={this.props.measure} />
-        <MeasureNotes measure={this.props.measure} />
+        <MeasureSheet measure={measure} />
+        <MeasureTab measure={measure} />
+        <MeasureNotes measure={measure} />
       </g>
     )
   }

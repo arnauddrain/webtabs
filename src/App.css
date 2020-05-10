@@ -24,4 +24,5 @@
 
 .PlayerAction {
   cursor: pointer;
+  user-select: none;
 }

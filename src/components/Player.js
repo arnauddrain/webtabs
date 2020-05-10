@@ -1,32 +1,29 @@
 import React from 'react';
 
 class Player extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  play = () => {
+    this.props.playbackChange({
       playing: true
-    }
-  }
-
-  onClick = () => {
-    this.setState({
-      playing: !this.state.playing
     });
   }
 
-  render() {
+  pause = () => {
+    this.props.playbackChange({
+      playing: false
+    });
+  }
+
+  render = () => {
     let button;
-    if (this.state.playing) {
-      button = <>&#x23F5;</>
+    if (this.props.playback.playing) {
+      button = <span className="PlayerAction" onClick={this.pause}>&#x23F8;</span>
     } else {
-      button = <>&#x23F8;</>
+      button = <span className="PlayerAction" onClick={this.play}>&#x23F5;</span>
     }
     return (
       <div className="Player">
         <div className="PlayerInner">
-          <span className="PlayerAction" onClick={this.onClick}>
-            {button}
-          </span>
+          {button}
         </div>
       </div>
     )
