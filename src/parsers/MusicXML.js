@@ -3,13 +3,18 @@ class MusicXML {
     this.attributes = {};
   }
 
-  getTextValue(domElement, tagName) {
+  getTextValue(domElement, tagName, attributeName) {
     const elements = domElement.getElementsByTagName(tagName);
     if (!elements.length) {
-      return this.attributes[tagName];
+      return this.attributes[tagName + attributeName];
     }
-    const value = elements[0].childNodes[0].nodeValue;
-    this.attributes[tagName] = value;
+    let value;
+    if (attributeName) {
+      value = [...elements].find(e => e.hasAttribute(attributeName)).getAttribute(attributeName);
+    } else {
+      value = elements[0].childNodes[0].nodeValue;
+    }
+    this.attributes[tagName + attributeName] = value;
     return value;
   }
 
@@ -17,8 +22,8 @@ class MusicXML {
     return (domElement.getElementsByTagName(tagName).length > 0);
   }
 
-  getNumberValue(domElement, tagName) {
-    return parseInt(this.getTextValue(domElement, tagName));
+  getNumberValue(domElement, tagName, attributeName) {
+    return parseInt(this.getTextValue(domElement, tagName, attributeName));
   }
 
   parseNote(noteXML) {
@@ -46,6 +51,7 @@ class MusicXML {
         beats: this.getNumberValue(measureXML, 'beats'),
         beatType: this.getNumberValue(measureXML, 'beat-type')
       },
+      tempo: this.getNumberValue(measureXML, 'sound', 'tempo'),
       clef: {
         sign: this.getTextValue(measureXML, 'sign'),
         line: this.getNumberValue(measureXML, 'line'),

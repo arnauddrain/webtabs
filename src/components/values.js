@@ -1,5 +1,5 @@
 const Values = {
-  LINE_LENGTH: 300,
+  MEASURE_LENGTH: 300,
   SHEET_STEP: 9,
   SHEET_BASE: 15,
   TAB_STEP: 11,

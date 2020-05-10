@@ -5,7 +5,7 @@ import Values from './values';
 
 class Line extends React.Component {
   render() {
-    return <rect x="0" y={this.props.base + (this.props.step * this.props.number)} width={Values.LINE_LENGTH} height="1"></rect>
+    return <rect x="0" y={this.props.base + (this.props.step * this.props.number)} width={Values.MEASURE_LENGTH} height="1"></rect>
   }
 }
 
@@ -42,7 +42,7 @@ class MeasureNotes extends React.Component {
         notes.push(this.generateNotes(this.props.measure.notes[index], noteDuration, index, currentDuration));
         index++;
       }
-      currentDuration += (Values.LINE_LENGTH - 20) * (noteDuration / (this.props.measure.time.beats / this.props.measure.time.beatType));
+      currentDuration += (Values.MEASURE_LENGTH - 20) * (noteDuration / (this.props.measure.time.beats / this.props.measure.time.beatType));
     }
     return notes
   }
@@ -52,7 +52,7 @@ class Measure extends React.Component {
   render() {
     const measure = this.props.measure;
     return (
-      <g transform={'translate(' + (62 + Values.LINE_LENGTH * this.props.number) + ', 0)'}>
+      <g transform={'translate(' + (62 + Values.MEASURE_LENGTH * this.props.number) + ', 0)'}>
         <rect x="300" y="15" width="1" height="37" fill="black"></rect>
         <rect x="300" y="165" width="1" height="56" fill="black"></rect>
         <MeasureSheet measure={measure} />
