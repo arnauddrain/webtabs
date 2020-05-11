@@ -41,7 +41,7 @@ class PlaybackLine extends React.Component {
     for (let i = 0; i < measure.notes.length; i++) {
       if (!measure.notes[i].isChord) {
         noteDuration += 60 / measure.tempo * 1000 * (measure.notes[i].duration / measure.divisions)
-        if (noteDuration > progress) {
+        if (noteDuration >= progress) {
           const notes = [measure.notes[i]];
           i++;
           while (i < measure.notes.length && measure.notes[i].isChord) {
