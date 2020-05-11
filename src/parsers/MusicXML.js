@@ -10,7 +10,11 @@ class MusicXML {
     }
     let value;
     if (attributeName) {
-      value = [...elements].find(e => e.hasAttribute(attributeName)).getAttribute(attributeName);
+      const element = [...elements].find(e => e.hasAttribute(attributeName));
+      if (!element) {
+        return this.attributes[tagName + attributeName];
+      }
+      value = element.getAttribute(attributeName);
     } else {
       value = elements[0].childNodes[0].nodeValue;
     }

@@ -40,7 +40,10 @@ class Note extends React.Component {
     const note = this.props.note;
     const measure = this.props.measure;
     let value;
-    const keyValue = 4 * 7 + getValue(measure.clef.sign) + 7 * measure.clef.octaveChange;
+    let keyValue = 4 * 7 + getValue(measure.clef.sign);
+    if (measure.clef.octaveChange) {
+      keyValue += 7 * measure.clef.octaveChange;
+    }
     if (note.rest) {
       value = keyValue + 5;
     } else {

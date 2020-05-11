@@ -5,6 +5,9 @@ import Values from './values';
 class TabNote extends React.Component {
   render() {
     const note = this.props.note;
+    if (!note.tab.string) {
+      return null;
+    }
     const y = Values.TAB_BASE + Values.TAB_STEP * note.tab.string - 5;
     return (
       <>

@@ -73,7 +73,8 @@ class PlaybackLine extends React.Component {
     if (newNotes[0] !== this.currentNotes[0]) {
       this.currentNotes = newNotes;
       const duration = 60 / measure.tempo * (newNotes[0].duration / measure.divisions);
-      this.midiSounds.playChordNow(244, newNotes.map(note => this.getValue(note.pitch.step) + 12 * note.pitch.octave), duration);
+      const soundNotes = newNotes.filter(note => !note.rest);
+      this.midiSounds.playChordNow(244, soundNotes.map(note => this.getValue(note.pitch.step) + 12 * note.pitch.octave), duration);
     }
     const x = 62 + Values.MEASURE_LENGTH * (this.measure % 3) + (progress / measureDuration) * Values.MEASURE_LENGTH;
     const y = (20 + 300 * Math.floor(this.measure / 3));
