@@ -1,22 +1,58 @@
+import MIDISounds from 'midi-sounds-react';
 import React from 'react';
 import Values from './values';
 
 class PlaybackLine extends React.Component {
   constructor(props) {
     super(props);
-    this.start = 0;
     this.rafId = 0;
     this.playing = false;
-    this.measure = 0;
-    this.previousMeasuresDuration = 0;
     this.state = {
       x: 0,
       y: 0
     }
   }
 
+  getValue = (letter) => {
+    return {
+      'A': 9,
+      'B': 10,
+      'C': 0,
+      'D': 2,
+      'E': 4,
+      'F': 5,
+      'G': 7
+    }[letter];
+  }
+
+  reset = () => {
+    this.start = null;
+    this.previousMeasuresDuration = 0;
+    this.currentNotes = [];
+    this.measure = this.props.playback.measure;
+  }
+
   componentWillUnmount() {
     cancelAnimationFrame(this.rafId);
+  }
+
+  computeCurrentNote(measure, progress) {
+    let noteDuration = 0;
+    for (let i = 0; i < measure.notes.length; i++) {
+      if (!measure.notes[i].isChord) {
+        noteDuration += 60 / measure.tempo * 1000 * (measure.notes[i].duration / measure.divisions)
+        if (noteDuration > progress) {
+          const notes = [measure.notes[i]];
+          i++;
+          while (i < measure.notes.length && measure.notes[i].isChord) {
+            notes.push(measure.notes[i]);
+            i++;
+          }
+          return notes;
+        }
+      }
+    }
+    return [];
   }
 
   animate = (timestamp) => {
@@ -33,6 +69,12 @@ class PlaybackLine extends React.Component {
       measure = this.props.music.parts[0].measures[this.measure];
       measureDuration = 60 / measure.tempo * measure.time.beats * 1000;
     }
+    const newNotes = this.computeCurrentNote(measure, progress);
+    if (newNotes[0] !== this.currentNotes[0]) {
+      this.currentNotes = newNotes;
+      const duration = 60 / measure.tempo * (newNotes[0].duration / measure.divisions);
+      this.midiSounds.playChordNow(244, newNotes.map(note => this.getValue(note.pitch.step) + 12 * note.pitch.octave), duration);
+    }
     const x = 62 + Values.MEASURE_LENGTH * (this.measure % 3) + (progress / measureDuration) * Values.MEASURE_LENGTH;
     const y = (20 + 300 * Math.floor(this.measure / 3));
     this.setState({
@@ -45,9 +87,7 @@ class PlaybackLine extends React.Component {
   handlePlayingChange = (playing) => {
     this.playing = playing;
     if (this.playing) {
-      this.start = null;
-      this.measure = this.props.playback.measure;
-      this.previousMeasuresDuration = 0;
+      this.reset();
       this.rafId = requestAnimationFrame(this.animate);
     } else {
       cancelAnimationFrame(this.rafId);
@@ -59,11 +99,16 @@ class PlaybackLine extends React.Component {
     if (playback.playing !== this.playing) {
       this.handlePlayingChange(playback.playing);
     }
+    let rect = null;
     if (this.playing) {
-      return <rect width="1" height="240" x={this.state.x} y={this.state.y} fill="blue"></rect>
-    } else {
-      return null;
+      rect = <rect width="1" height="240" x={this.state.x} y={this.state.y} fill="blue"></rect>;
     }
+    return (
+      <>
+        <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[244]} />
+        {rect}
+      </>
+    )
   }
 }
 
