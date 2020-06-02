@@ -25,14 +25,24 @@ class Note extends React.Component {
       } else {
         icon = 'QuarterRest';
       }
-    } else if (duration >= 1) {
-      icon = 'RoundNote';
-    } else if (duration >= 0.5) {
-      icon = 'WhiteNote';
     } else {
-      icon = 'BlackNote';
+      if (duration >= 1) {
+        icon = 'RoundNote';
+      } else if (duration >= 0.5) {
+        icon = 'WhiteNote';
+      } else {
+        icon = 'BlackNote';
+      }
     }
     return icon;
+  }
+
+  generateStem(note, duration, y) {
+    if (note.rest || duration >= 1) {
+      return null;
+    }
+    const path = `M9 ${y + 3} L9 ${y - 20}`;
+    return <path d={path} stroke="black" />
   }
 
   render() {
@@ -50,9 +60,13 @@ class Note extends React.Component {
       value = getValue(note.pitch.step) + 7 * note.pitch.octave;
     }
     const diffValue = keyValue - value;
-    const zeroValue = 12 + Values.SHEET_STEP * 3 + 4.5 * diffValue;
-    let icon = this.selectImage(note, duration);
-    return <image href={'/svg/' + icon + '.svg'} y={zeroValue}></image>
+    const y = 12 + Values.SHEET_STEP * 3 + 4.5 * diffValue;
+    const icon = this.selectImage(note, duration);
+    const stem = this.generateStem(note, duration, y);
+    return <>
+      <image href={'/svg/' + icon + '.svg'} y={y}></image>
+      {stem}
+    </>
   }
 }
 
